@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>HID Device reader</title>
+    <style>
+        body {
+            gap: 0;
+        }
+        .hidden {
+            display: none;
+        }
+        .app-container {
+            margin: 0;
+            font-size: 16px;
+            font-family: Arial;
+            display: grid;
+            grid-template-rows: 24px 1fr 24px;
+            grid-template-columns: 1fr 400px;
+            grid-template-areas:
+                    "hd hd"
+        "pages console"
+        "ft ft";
+        }
+        .page {
+
+        }
+        .pages {
+            grid-area: pages;
+        }
+
+        .header {
+            grid-area: hd;
+            background-color: #b3b3b3;
+
+        }
+
+        .footer {
+            grid-area: ft;
+            background-color: #7e7e7e;
+        }
+
+
+    </style>
+</head>
+
+<body>
+
+<div class="app-container">
+    <div class="header">
+        <span>Header</span>
+        <button id="connect-button" >Connect to Mindlife Device</button>
+        <button class="page-switcher" page="page-1">Page 1</button>
+        <button class="page-switcher" page="page-2">Page 2</button>
+        <button class="page-switcher" page="page-3">Page 3</button>
+        <span id="status-indicator">(server status)</span>
+
+    </div>
+    <div class="pages">
+        <div class="page" id="page-1">
+            <websocket-element url="ws://localhost:1102" bits="16" channels="1", sample-rate="188.2">
+            </websocket-element>
+            <div style="height: 80vh;">
+                <scope-element></scope-element>
+            </div>
+
+          </div>
+        <div class="page" id="page-2">
+            <custom-element value="Hello, world!">
+
+            </custom-element>
+         </div>
+        <div class="page" id="page-3">
+
+        </div>
+    </div>
+    <console-element></console-element>
+    <div class="footer">
+        <span>Footer</span>
+    </div>
+</div>
+
+<script src="index.js"></script>
+
+</body>
+
+</html>
