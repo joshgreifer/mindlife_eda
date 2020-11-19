@@ -24,7 +24,7 @@
     "webpack-dev-middleware": "^4.0.2",
     "webpack-dev-server": "^3.11.0"
   },
-  "name": "eda_node",
+  "name": "mindlife_eda",
   "description": "Display Mindlife EDA",
   "scripts": {
     "build-and-serve": "webpack --config webpack.config.js --mode=development --env.NODE_ENV=development && node dist/server.js",
