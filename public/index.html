@@ -4,23 +4,36 @@
     <meta charset="UTF-8">
     <title>HID Device reader</title>
     <style>
+        :root {
+            /*  Globally used vars */
+            --theme-background-image: linear-gradient(#a4b7af, #323b34);
+            /*  PracticeComponent vars */
+            --word-popup-bg-color: rgba(224, 224, 224, 0.6);
+
+        }
+
         body {
-            gap: 0;
+            /*gap: 0;*/
+            color: #000000;
         }
         .hidden {
             display: none;
         }
         .app-container {
-            margin: 0;
-            font-size: 16px;
-            font-family: Arial;
+            background-image: var(--theme-background-image);
+            margin: 2px;
+            font-size: 14px;
+            font-family: Arial,sans-serif;
             display: grid;
+            gap: 5px;
             grid-template-rows: 24px 1fr 24px;
-            grid-template-columns: 1fr 400px;
+            grid-template-columns: 100%;
+            padding-left: 5px;
+            padding-right: 5px;
             grid-template-areas:
-                    "hd hd"
-        "pages console"
-        "ft ft";
+                "hd"
+                "pages"
+                "ft";
         }
         .page {
 
@@ -31,15 +44,66 @@
 
         .header {
             grid-area: hd;
-            background-color: #b3b3b3;
+            background-color: #688a7f;
+            border-bottom: 1px solid rgba(0,0,0,0.2);
+
 
         }
 
         .footer {
+            padding: 5px;
             grid-area: ft;
-            background-color: #7e7e7e;
+            background-color: #688a7f;
+            border-top: 1px solid rgba(0,0,0,0.2);
+
         }
 
+        button {
+            border-radius: 5px;
+        }
+
+        .page-switcher {
+            border-radius: 5px 5px 0 0;
+            margin: 0;
+        }
+
+        .settings {
+            font-size: 14px;
+        }
+
+        .settings label {
+            display: inline-block;
+
+            width: 200px;
+        }
+        .settings .section {
+            /*background-color: #151515;*/
+            margin: 5px;
+            border-bottom: 1px solid rgba(0,0,0,0.2);
+        }
+        .scopes {
+            display: grid;
+            gap: 5px;
+            grid-template-columns: auto 27vw;
+            grid-template-areas:
+                "scl control"
+                "scr console";
+        }
+
+        .scopes .scl {
+            grid-area: scl;
+        }
+        .scopes .scr {
+            grid-area: scr;
+        }
+
+        .scopes .control {
+            grid-area: control;
+            /*background-color: #a97171;*/
+            width: 100%;
+        }
+        .scopes console-element {
+        }
 
     </style>
 </head>
@@ -48,38 +112,85 @@
 
 <div class="app-container">
     <div class="header">
-        <span>Header</span>
-        <button id="connect-button" >Connect to Mindlife Device</button>
-        <button class="page-switcher" page="page-1">Page 1</button>
-        <button class="page-switcher" page="page-2">Page 2</button>
-        <button class="page-switcher" page="page-3">Page 3</button>
-        <span id="status-indicator">(server status)</span>
-
+        <span>V 1.0</span>
+        <!--        <button id="connect-button">Connect to EDA</button>-->
+        <button class="page-switcher" page="page-1">Options</button>
+        <button class="page-switcher" page="page-2">EDA Plot</button>
+        <button class="page-switcher" page="page-3">Face Detection</button>
     </div>
     <div class="pages">
+
         <div class="page" id="page-1">
-            <websocket-element url="ws://localhost:1102" bits="16" channels="1", sample-rate="188.2">
-            </websocket-element>
-            <div style="height: 80vh;">
-                <scope-element></scope-element>
+            <div class="settings">
+                <h1>General Settings</h1>
+                <ul>
+                    <li>
+                        <label for="speech-sdk-password-input">Speech Recognizer Password: </label>
+                        <input id="speech-sdk-password-input" type="password">
+                        <button id="start-speech-recognition-button">Start Speech Recognition</button>
+                    </li>
+                    <li><label for="enable-gaze-detection">Detect eyes open/closed: </label><input id="enable-gaze-detection" type="checkbox"></li>
+                </ul>
+
+
+            </div>
+            <div class="settings">
+                <h1>Plot Settings</h1>
+                <ul>
+                    <li>
+                        <label>Follow Signal: </label>
+                        <input id="scope-signal-follow-behaviour-scroll" name="scope-signal-follow-behaviour" type="radio" value="0"><span> Scrolling window </span>
+                        <input id="scope-signal-follow-behaviour-paginate" name="scope-signal-follow-behaviour" type="radio"  value="1"><span> Paginating window </span>
+                        <input id="scope-signal-follow-behaviour-fit" name="scope-signal-follow-behaviour" type="radio"  value="2"><span> Rescale time axis to signal </span>
+                    </li>
+
+                </ul>
+
+                <h1>Marker Settings</h1>
+                <ul>
+                    <li><scope-marker-editor-element label="0" color="#ff1c39" /></li>
+                    <li><scope-marker-editor-element label="1" color="#ff1c39" /></li>
+                    <li><scope-marker-editor-element label="2" color="#ff1c39" /></li>
+                    <li><scope-marker-editor-element label="3" color="#ff1c39" /></li>
+                    <li><scope-marker-editor-element label="4" color="#ff1c39" /></li>
+                    <li><scope-marker-editor-element label="5" color="#ff1c39" /></li>
+                    <li><scope-marker-editor-element label="6" color="#ff1c39" /></li>
+                    <li><scope-marker-editor-element label="7" color="#ff1c39" /></li>
+                    <li><scope-marker-editor-element label="8" color="#ff1c39" /></li>
+                    <li><scope-marker-editor-element label="9" color="#ff1c39" /></li>
+                </ul>
+
             </div>
 
-          </div>
+        </div>
         <div class="page" id="page-2">
-            <custom-element value="Hello, world!">
+            <div class="scopes">
+                <scope-element height="300px" width="70vw" class="scl"></scope-element>
+                <scope-element id="scr-scope" height="400px"  width="70vw" class="scr" labels></scope-element>
+                <console-element></console-element>
+                <div class="control">
+                    <session-manager-element data-source="scr-scope"></session-manager-element>
 
-            </custom-element>
-         </div>
-        <div class="page" id="page-3">
+                    <scope-marker-editor-element label="Cue" color="#0000ff" />
+
+                    <scope-marker-editor-element label="SCR" color="#ffff00" />
+                </div>
+            </div>
 
         </div>
+        <div class="page" id="page-3">
+            <facedetect-element enabled="false"></facedetect-element>
+        </div>
     </div>
-    <console-element></console-element>
+
     <div class="footer">
-        <span>Footer</span>
+        <span id="status-indicator">(server status)</span>
+        <websocket-element style="float: right; margin-right: 5px"  url="ws://localhost:1102" bits="16" channels="1" sample-rate="118.2">
+        </websocket-element>
     </div>
 </div>
 
+<script src="opencv/opencv.js"></script>
 <script src="index.js"></script>
 
 </body>
