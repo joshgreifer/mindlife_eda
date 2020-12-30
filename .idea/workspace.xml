@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="72bd2537-f9ea-407f-84bc-cc5425762c96" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1kV3Cli5xU7MWQzsydhkvUvUrCw" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../eda_node" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="72bd2537-f9ea-407f-84bc-cc5425762c96" name="Default Changelist" comment="" />
+      <created>1605771805633</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1605771805633</updated>
+      <workItem from="1605771806726" duration="1017000" />
+      <workItem from="1605772962008" duration="27000" />
+    </task>
+    <task id="LOCAL-00001" summary="Added publishConfig">
+      <created>1605772487257</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1605772487257</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Added publishConfig&#10;Changed name">
+      <created>1605772562033</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1605772562033</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Added publishConfig" />
+    <MESSAGE value="Added publishConfig&#10;Changed name" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added publishConfig&#10;Changed name" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="949" y="115" key="CommitChangelistDialog2" timestamp="1605772561460">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state x="949" y="115" key="CommitChangelistDialog2/0.0.1920.1050/130.-1440.3378.1440@0.0.1920.1050" timestamp="1605772561460" />
+    <state x="741" y="280" key="FileChooserDialogImpl" timestamp="1605772986632">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state x="741" y="280" key="FileChooserDialogImpl/0.0.1920.1050/130.-1440.3378.1440@0.0.1920.1050" timestamp="1605772986632" />
+    <state x="553" y="245" key="Vcs.Push.Dialog.v2" timestamp="1605772563583">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state x="553" y="245" key="Vcs.Push.Dialog.v2/0.0.1920.1050/130.-1440.3378.1440@0.0.1920.1050" timestamp="1605772563583" />
+  </component>
+</project>
