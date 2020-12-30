@@ -6,7 +6,7 @@
     <style>
         :root {
             /*  Globally used vars */
-            --theme-background-image: linear-gradient(#a4b7af, #323b34);
+            --theme-background-image: linear-gradient(#a4b7af, #5a6b5e, #a4b7af);
             /*  PracticeComponent vars */
             --word-popup-bg-color: rgba(224, 224, 224, 0.6);
 
@@ -44,7 +44,7 @@
 
         .header {
             grid-area: hd;
-            background-color: #688a7f;
+
             border-bottom: 1px solid rgba(0,0,0,0.2);
 
 
@@ -53,7 +53,6 @@
         .footer {
             padding: 5px;
             grid-area: ft;
-            background-color: #688a7f;
             border-top: 1px solid rgba(0,0,0,0.2);
 
         }
@@ -71,6 +70,9 @@
             font-size: 14px;
         }
 
+        span label {
+            display: inline;
+        }
         .settings label {
             display: inline-block;
 
@@ -105,6 +107,19 @@
         .scopes console-element {
         }
 
+        .speech-detection-active-indicator {
+            float: right;
+            font-weight: bold;
+
+        }
+        .speech-detection-active-indicator.active:after {
+            color: #ff0303;
+            content: "Speech Detection Active";
+        }
+        .speech-detection-active-indicator:after {
+            color: #5f5f5f;
+            content: "Speech Detection Inactive";
+        }
     </style>
 </head>
 
@@ -117,6 +132,7 @@
         <button class="page-switcher" page="page-1">Options</button>
         <button class="page-switcher" page="page-2">EDA Plot</button>
         <button class="page-switcher" page="page-3">Face Detection</button>
+        <div class="speech-detection-active-indicator"></div>
     </div>
     <div class="pages">
 
@@ -125,9 +141,9 @@
                 <h1>General Settings</h1>
                 <ul>
                     <li>
+                        <label for="enable-speech-detection">Use speech detection: </label><input id="enable-speech-detection" type="checkbox" disabled>
                         <label for="speech-sdk-password-input">Speech Recognizer Password: </label>
                         <input id="speech-sdk-password-input" type="password">
-                        <button id="start-speech-recognition-button">Start Speech Recognition</button>
                     </li>
                     <li><label for="enable-gaze-detection">Detect eyes open/closed: </label><input id="enable-gaze-detection" type="checkbox"></li>
                 </ul>
@@ -139,27 +155,56 @@
                 <ul>
                     <li>
                         <label>Follow Signal: </label>
-                        <input id="scope-signal-follow-behaviour-scroll" name="scope-signal-follow-behaviour" type="radio" value="0"><span> Scrolling window </span>
-                        <input id="scope-signal-follow-behaviour-paginate" name="scope-signal-follow-behaviour" type="radio"  value="1"><span> Paginating window </span>
-                        <input id="scope-signal-follow-behaviour-fit" name="scope-signal-follow-behaviour" type="radio"  value="2"><span> Rescale time axis to signal </span>
+                        <input id="scope-signal-follow-behaviour-scroll" name="scope-signal-follow-behaviour" type="radio" value="0" checked>
+                        <span><label for="scope-signal-follow-behaviour-scroll">Scrolling window</label></span>
+                        <input id="scope-signal-follow-behaviour-paginate" name="scope-signal-follow-behaviour" type="radio"  value="1">
+                        <span><label for="scope-signal-follow-behaviour-paginate">Paginating window</label></span>
+                        <input id="scope-signal-follow-behaviour-fit" name="scope-signal-follow-behaviour" type="radio"  value="2">
+                        <span><label for="scope-signal-follow-behaviour-fit">Rescale time axis to signal</label></span>
                     </li>
-
                 </ul>
 
                 <h1>Marker Settings</h1>
-                <ul>
-                    <li><scope-marker-editor-element label="0" color="#ff1c39" /></li>
+                <ul style="display: flex; flex-wrap: wrap; list-style: none;">
+                    <li><scope-marker-editor-element label="Trigger" color="#ff1c39" /></li>
+                    <li><scope-marker-editor-element label="BaseLevel" color="#384a4b"/></li>
+                    <li><scope-marker-editor-element label="Triggered" color="#ff1c39"/></li>
+                    <li><scope-marker-editor-element label="Rising" color="#a7e2e2" /></li>
+                    <li><scope-marker-editor-element label="Peak" color="#a7e2e2" /></li>
+                    <li><scope-marker-editor-element label="Recovered" color="#a7e2e2" /></li>
                     <li><scope-marker-editor-element label="1" color="#ff1c39" /></li>
                     <li><scope-marker-editor-element label="2" color="#ff1c39" /></li>
                     <li><scope-marker-editor-element label="3" color="#ff1c39" /></li>
                     <li><scope-marker-editor-element label="4" color="#ff1c39" /></li>
-                    <li><scope-marker-editor-element label="5" color="#ff1c39" /></li>
-                    <li><scope-marker-editor-element label="6" color="#ff1c39" /></li>
-                    <li><scope-marker-editor-element label="7" color="#ff1c39" /></li>
-                    <li><scope-marker-editor-element label="8" color="#ff1c39" /></li>
-                    <li><scope-marker-editor-element label="9" color="#ff1c39" /></li>
                 </ul>
+                <h1>Response Analysis Settings</h1>
+                <ul>
+                    <li><label for="stats-buffer-duration-seconds" title="The duration in seconds that the baseline signal is calculated over.
 
+If the baseline EDA signal fluctuates significantly, increase this value.
+">
+                        Baseline calculation period (s)
+                    </label>
+                     <input class="response-analysis-parameter" type="number" id="stats-buffer-duration-seconds" min="1" max="10" step="1" value="5">
+                    </li>
+                    <li><label for="min-latency-seconds" title="The minimum latency in seconds after a stimulus before a response is considered to be an event-related response.
+
+Increase this value to prevent false response detection if the subject has frequent non-specific responses.
+">
+                        Minimum latency period (s)
+                    </label>
+                        <input class="response-analysis-parameter" type="number" id="min-latency-seconds" min="0" max="5" step="1" value="0">
+                    </li>
+                    </li>
+                    <li><label for="max-latency-seconds" title="The maximum latency in seconds  after a stimulus before a response is disregarded.
+
+Decrease this value if valid event-related responses are being missed by the system.
+">
+                        Maximum latency period (s)
+                    </label>
+                        <input class="response-analysis-parameter" type="number" id="max-latency-seconds" min="1" max="10" step="1" value="3">
+                    </li>
+                </ul>
             </div>
 
         </div>
