@@ -2,11 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>HID Device reader</title>
+    <title>Mind Heart Tech</title>
     <style>
         :root {
             /*  Globally used vars */
-            --theme-background-image: linear-gradient(#a4b7af, #5a6b5e, #a4b7af);
+            --theme-background-image: linear-gradient(#a4b7af, #7a8d7d, #a4b7af);
             /*  PracticeComponent vars */
             --word-popup-bg-color: rgba(224, 224, 224, 0.6);
 
@@ -20,13 +20,13 @@
             display: none;
         }
         .app-container {
-            background-image: var(--theme-background-image);
+           background-image: var(--theme-background-image);
             margin: 2px;
             font-size: 14px;
             font-family: Arial,sans-serif;
             display: grid;
             gap: 5px;
-            grid-template-rows: 24px 1fr 24px;
+            grid-template-rows: 24px 1fr 48px;
             grid-template-columns: 100%;
             padding-left: 5px;
             padding-right: 5px;
@@ -36,7 +36,7 @@
                 "ft";
         }
         .page {
-
+            border: 1px solid #5a6b5e;
         }
         .pages {
             grid-area: pages;
@@ -44,8 +44,8 @@
 
         .header {
             grid-area: hd;
-
-            border-bottom: 1px solid rgba(0,0,0,0.2);
+            margin: 0;
+            /*border-bottom: 1px solid rgba(0,0,0,0.2);*/
 
 
         }
@@ -59,13 +59,25 @@
 
         button {
             border-radius: 5px;
+
         }
 
         .page-switcher {
-            border-radius: 5px 5px 0 0;
-            margin: 0;
-        }
 
+            font-weight: bold;
+            border: 1px solid #5a6b5e;
+            border-radius: 5px 5px 0 0;
+            color: #5a6b5e;
+            background-color: #a4b7af;
+            margin: 0;
+            position: relative;
+            bottom: -11px;
+
+        }
+        .page-switcher:disabled {
+            color: #ffffff;
+            border-bottom:  1px solid #a4b7af;
+        }
         .settings {
             font-size: 14px;
         }
@@ -132,6 +144,8 @@
         <button class="page-switcher" page="page-1">Options</button>
         <button class="page-switcher" page="page-2">EDA Plot</button>
         <button class="page-switcher" page="page-3">Face Detection</button>
+        <button class="page-switcher" page="page-4">PPG/EDA</button>
+
         <div class="speech-detection-active-indicator"></div>
     </div>
     <div class="pages">
@@ -185,7 +199,7 @@ If the baseline EDA signal fluctuates significantly, increase this value.
 ">
                         Baseline calculation period (s)
                     </label>
-                     <input class="response-analysis-parameter" type="number" id="stats-buffer-duration-seconds" min="1" max="10" step="1" value="5">
+                        <input class="response-analysis-parameter" type="number" id="stats-buffer-duration-seconds" min="1" max="10" step="1" value="5">
                     </li>
                     <li><label for="min-latency-seconds" title="The minimum latency in seconds after a stimulus before a response is considered to be an event-related response.
 
@@ -210,8 +224,8 @@ Decrease this value if valid event-related responses are being missed by the sys
         </div>
         <div class="page" id="page-2">
             <div class="scopes">
-                <scope-element height="300px" width="70vw" class="scl"></scope-element>
-                <scope-element id="scr-scope" height="400px"  width="70vw" class="scr" labels></scope-element>
+                <scope-element height="300px" width="70vw" class="scl" title="Skin Conductance Level"></scope-element>
+                <scope-element id="scr-scope" height="400px"  width="70vw" class="scr" title="Skin Conductance Response" labels></scope-element>
                 <console-element></console-element>
                 <div class="control">
                     <session-manager-element data-source="scr-scope"></session-manager-element>
@@ -226,18 +240,29 @@ Decrease this value if valid event-related responses are being missed by the sys
         <div class="page" id="page-3">
             <facedetect-element enabled="false"></facedetect-element>
         </div>
+        <div class="page" id="page-4">
+            <scope-element id="eda-scope" height="40vh"  width="95vw" title="MindHeart Tech EDA"></scope-element>
+            <scope-element id="ppg-scope" height="40vh"  width="95vw" title="MindHeart Tech PPG"></scope-element>
+        </div>
     </div>
 
     <div class="footer">
-        <span id="status-indicator">(server status)</span>
-        <websocket-element style="float: right; margin-right: 5px"  url="ws://localhost:1102" bits="16" channels="1" sample-rate="118.2">
-        </websocket-element>
+        <div style="clear: both">
+            USB (HID) Device Mindlife EDA:
+            <span id="usb-device-status-indicator">(server status)</span>
+            <websocket-element id="usb-device-connection" style="float: right; margin-right: 5px"  url="ws://localhost:1102" bits="16" channels="1" sample-rate="118.2"></websocket-element>
+
+        </div>
+        <div style="clear: both">
+            BT Serial Port Device MindHeart Tech:
+            <span id="serial-port-device-status-indicator">(server status)</span>
+            <websocket-element id="serial-port-device-connection"  style="float: right; margin-right: 5px"  url="ws://localhost:1103" bits="16" channels="2" sample-rate="100"></websocket-element>
+        </div>
     </div>
+
+    <script src="opencv/opencv.js"></script>
+    <script src="index.js"></script>
 </div>
-
-<script src="opencv/opencv.js"></script>
-<script src="index.js"></script>
-
 </body>
 
 </html>
