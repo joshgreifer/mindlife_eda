@@ -1,7 +1,7 @@
 # Mindlife EDA Scope
-Version 1.0.3
+Version 1.0.4
 
-#### What's New in Version 1.0.3
+#### What's New in Version 1.0.4
 * Supports both Mindlife USB (HID) EDA Device and Mind Heart Tech Bluetooth Dual Channel device
 * Displays raw PPG and EDA signal from Mind Heart Tech device
 
