@@ -29,8 +29,8 @@ Version 1.0.4
 1.  Save the file `settings.json`.
 
 *   To find the port name (e.g. `COM7`) in Windows, use the Device Manager (`Windows-key R, devmgmt.msc`).
-*   To find the device path in MacOS, run `ls -l /dev/tty\.*` from a terminal, and look for a device path that contains the string `Mind_Heart`.
-*   For Linux, you wll need to create the rfcomm serial device manually (e.g. `/dev/rfcomm0`).
+*   To find the device path in MacOS, run `ls -l /dev/tty\.*` from a terminal, and look for a device path that contains the string `Mind_Heart` The device path will probably be `/dev/tty.Mind_Heart_Tech-SerialP`.
+*   For Linux, you will need to create the rfcomm serial device manually (e.g. `/dev/rfcomm0`).
 
 #### Launching the app
 
