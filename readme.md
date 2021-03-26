@@ -1,4 +1,10 @@
 # Mindlife EDA Scope
+Version 1.0.3
+
+#### What's New in Version 1.0.3
+* Supports both Mindlife USB (HID) EDA Device and Mind Heart Tech Bluetooth Dual Channel device
+* Displays raw PPG and EDA signal from Mind Heart Tech device
+
 
 #### Installation:
 
@@ -10,24 +16,27 @@
 
 * If you have any issues installing node-hid, you may need to follow the  instructions to [compile it from source](https://www.npmjs.com/package/node-hid/v/0.5.2#compiling-from-source))
 
+#### Setting the serial port used by the Mind Heart Tech device
+
+1.  Install the app as explained above.
+
+1.  Pair the device with the computer.
+
+1.  Open the file `settings.json` in a text editor.  The file is situated in the `public/` directory below the installation directory.
+
+1.  Edit the `"serialport"` value to be the rfcomm port name (Windows) or virtual device path (MacOS, Linux) that was assigned by the operating system (MacOS), or manually (Linux)  when the device was paired.
+
+1.  Save the file `settings.json`.
+
+*   To find the port name (e.g. `COM7`) in Windows, use the Device Manager (`Windows-key R, devmgmt.msc`).
+*   To find the device path in MacOS, run `ls -l /dev/tty\.*` from a terminal, and look for a device path that contains the string `Mind_Heart`.
+*   For Linux, you wll need to create the rfcomm serial device manually (e.g. `/dev/rfcomm0`).
+
 #### Launching the app
 
 1.  To launch the application, run `node app.js`,  then point your browser to [http://localhost:3050/](http://localhost:3050/).
 
-1.  Attach the EDA device to a USB port.  The app will detect this and display `Connected` in the status area at the bottom of the display.
-
-
-#### Starting a session
-
-* Click the `[Restart]` button to clear all data from the session.
-
-#### Recording a session
-* The app records continuously: there is no `[Record]` button.   
-
-* To save the session,  click the `[Save]` button.  Files are save in the same directory as the application, with the name indicated in the `Name:` input text field (default `"New Session.json"`)
-
-* Two files get written to disk when you save a session:  A `.json` file, which is human-readable, and a `.npy` file, which is a Python numpy file containing the EDA response signal.
-
+1.  Optionally, attach the EDA device to a USB port.  The app will detect this and display `USB (HID) Device Mindlife EDA: Connected.` in the status area at the bottom of the display.
 
 #### Zooming, Scrolling, Scaling and changing the plot signal-follow behaviour
 * To Zoom the plot, drag in the plot area.
@@ -36,13 +45,27 @@
 
 * To enable or disable signal follow behaviour, click the right-arrow in the bottom-left of the plot area.
 
-* To enable or disable veritcal (value axis) auto-scaling, click in the double-headed vertical arrow in the bottom-left of the plot area.
+* To enable or disable vertical (value axis) auto-scaling, click in the double-headed vertical arrow in the bottom-left of the plot area.
+
+
+#### Starting a session (USB Device only)
+
+* Click the `[Restart]` button to clear all data from the session.
+
+#### Recording a session (USB Device only)
+* The app records continuously: there is no `[Record]` button.   
+
+* To save the session,  click the `[Save]` button.  Files are save in the same directory as the application, with the name indicated in the `Name:` input text field (default `"New Session.json"`)
+
+* Two files get written to disk when you save a session:  A `.json` file, which is human-readable, and a `.npy` file, which is a Python numpy file containing the EDA response signal.
+
+
 #### Marking and annotating a session
 * Pressing a number key adds a Marker to the session at the time the key was pressed.
 * If speech detection is enabled, the app adds Markers for each recognized utterance.
 * You can also add a marker by double-clicking in the SCR plot.
 
-#### Triggering
+#### Triggering 
 A trigger is a special marker that causes the app to begin analysing the signal to identify an event-related skin conductance response (ER-SCR).
 
 * To create a trigger,  hit the Space Bar.
@@ -74,4 +97,7 @@ For example,  if a Marker's text is `Trigger: Clapped hands` or simply `Trigger`
 * Hover the mouse over the individual settings for a brief explanation of them.
 
 ### Gaze Detection
-* Gaze detection is enabled in this version,  but the app makes no use of gaze information at present. *Warning: Enabling gaze detection impacts the app's performance significantly.* 
+* Gaze detection is disabled in this version.
+
+### Speech detection.
+* Speech detection is enabled in this version.  Contact me (Josh Greifer) for a password.
