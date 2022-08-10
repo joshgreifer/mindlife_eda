@@ -6,7 +6,11 @@
     <style>
         :root {
             /*  Globally used vars */
-            --theme-background-image: linear-gradient(#a4b7af, #7a8d7d, #a4b7af);
+            --background-top-color: #a4b7af;
+            --background-middle-color: #7a8d7d;
+            --theme-background-image: linear-gradient(var(--background-top-color), var(--background-middle-color), var(--background-top-color));
+            --page-border-color: #5a6b5e;
+
             /*  PracticeComponent vars */
             --word-popup-bg-color: rgba(224, 224, 224, 0.6);
 
@@ -36,7 +40,7 @@
                 "ft";
         }
         .page {
-            border: 1px solid #5a6b5e;
+            border: 1px solid var(--page-border-color);
         }
         .pages {
             grid-area: pages;
@@ -62,13 +66,33 @@
 
         }
 
+        .heart-rate-display {
+            display: inline-block;
+            width: 48px;
+            height: 48px;
+            font-size: 18px;
+            background-color: rgb(1, 1, 1, 0.5);
+            font-family: Arial,sans-serif;
+        }
+        .finger {
+            color: #ffc200;
+        }
+        .face {
+            color: #00ff00;
+        }
+        .hcenter {
+            width: 100%;
+            margin: auto;
+            left:0;right:0; /* Aligns Horizontally - Remove for Vertical Only  */
+        }
+
         .page-switcher {
 
             font-weight: bold;
-            border: 1px solid #5a6b5e;
+            border: 1px solid var(--page-border-color);
             border-radius: 5px 5px 0 0;
-            color: #5a6b5e;
-            background-color: #a4b7af;
+            color: var(--page-border-color);
+            background-color: var(--background-top-color);
             margin: 0;
             position: relative;
             bottom: -11px;
@@ -76,7 +100,7 @@
         }
         .page-switcher:disabled {
             color: #ffffff;
-            border-bottom:  1px solid #a4b7af;
+            border-bottom:  1px solid var(--background-top-color);
         }
         .settings {
             font-size: 14px;
@@ -125,7 +149,7 @@
 
         }
         .speech-detection-active-indicator.active:after {
-            color: #ff0303;
+            color: #a40c0c;
             content: "Speech Detection Active";
         }
         .speech-detection-active-indicator:after {
@@ -142,14 +166,12 @@
 
 <div class="app-container">
     <div class="header">
-        <span class="version">v1.0.4</span>
+        <span class="version">v0.0.1 DEV</span>
         <!--        <button id="connect-button">Connect to EDA</button>-->
         <button class="page-switcher" page="page-1">Options</button>
-        <button class="page-switcher" page="page-2">EDA Plot</button>
-        <button class="page-switcher" page="page-3">Face Detection</button>
-        <button class="page-switcher" page="page-4">PPG/EDA</button>
-
-        <div class="speech-detection-active-indicator"></div>
+        <button class="page-switcher" page="page-2">Face Pulse</button>
+<!--        <button class="page-switcher" page="page-3">Console</button>-->
+<!--        <button class="page-switcher" page="page-4">PPG/EDA</button>-->
     </div>
     <div class="pages">
 
@@ -158,11 +180,11 @@
                 <h1>General Settings</h1>
                 <ul>
                     <li>
-                        <label for="enable-speech-detection">Use speech detection: </label><input id="enable-speech-detection" type="checkbox" disabled>
+<!--                        <label for="enable-speech-detection">Use speech detection: </label><input id="enable-speech-detection" type="checkbox" disabled>-->
                         <label for="speech-sdk-password-input">Speech Recognizer Password: </label>
                         <input id="speech-sdk-password-input" type="password">
                     </li>
-                    <li><label for="enable-gaze-detection">Detect eyes open/closed: </label><input id="enable-gaze-detection" type="checkbox"></li>
+<!--                    <li><label for="enable-gaze-detection">Detect Pulse from Camera: </label><input id="enable-gaze-detection" type="checkbox" checked></li>-->
                 </ul>
 
 
@@ -172,98 +194,121 @@
                 <ul>
                     <li>
                         <label>Follow Signal: </label>
-                        <input id="scope-signal-follow-behaviour-scroll" name="scope-signal-follow-behaviour" type="radio" value="0" checked>
+                        <input id="scope-signal-follow-behaviour-scroll" name="scope-signal-follow-behaviour" type="radio" value="0">
                         <span><label for="scope-signal-follow-behaviour-scroll">Scrolling window</label></span>
-                        <input id="scope-signal-follow-behaviour-paginate" name="scope-signal-follow-behaviour" type="radio"  value="1">
+                        <input id="scope-signal-follow-behaviour-paginate" name="scope-signal-follow-behaviour" type="radio"  value="1" checked>
                         <span><label for="scope-signal-follow-behaviour-paginate">Paginating window</label></span>
                         <input id="scope-signal-follow-behaviour-fit" name="scope-signal-follow-behaviour" type="radio"  value="2">
                         <span><label for="scope-signal-follow-behaviour-fit">Rescale time axis to signal</label></span>
                     </li>
                 </ul>
 
-                <h1>Marker Settings</h1>
-                <ul style="display: flex; flex-wrap: wrap; list-style: none;">
-                    <li><scope-marker-editor-element label="Trigger" color="#ff1c39" /></li>
-                    <li><scope-marker-editor-element label="BaseLevel" color="#384a4b"/></li>
-                    <li><scope-marker-editor-element label="Triggered" color="#ff1c39"/></li>
-                    <li><scope-marker-editor-element label="Rising" color="#a7e2e2" /></li>
-                    <li><scope-marker-editor-element label="Peak" color="#a7e2e2" /></li>
-                    <li><scope-marker-editor-element label="Recovered" color="#a7e2e2" /></li>
-                    <li><scope-marker-editor-element label="1" color="#ff1c39" /></li>
-                    <li><scope-marker-editor-element label="2" color="#ff1c39" /></li>
-                    <li><scope-marker-editor-element label="3" color="#ff1c39" /></li>
-                    <li><scope-marker-editor-element label="4" color="#ff1c39" /></li>
-                </ul>
-                <h1>Response Analysis Settings</h1>
-                <ul>
-                    <li><label for="stats-buffer-duration-seconds" title="The duration in seconds that the baseline signal is calculated over.
+<!--                <h1>Marker Settings</h1>-->
+<!--                <ul style="display: flex; flex-wrap: wrap; list-style: none;">-->
+<!--                    <li><scope-marker-editor-element label="Trigger" color="#ff1c39" /></li>-->
+<!--                    <li><scope-marker-editor-element label="BaseLevel" color="#384a4b"/></li>-->
+<!--                    <li><scope-marker-editor-element label="Triggered" color="#ff1c39"/></li>-->
+<!--                    <li><scope-marker-editor-element label="Rising" color="#a7e2e2" /></li>-->
+<!--                    <li><scope-marker-editor-element label="Peak" color="#a7e2e2" /></li>-->
+<!--                    <li><scope-marker-editor-element label="Recovered" color="#a7e2e2" /></li>-->
+<!--                    <li><scope-marker-editor-element label="1" color="#ff1c39" /></li>-->
+<!--                    <li><scope-marker-editor-element label="2" color="#ff1c39" /></li>-->
+<!--                    <li><scope-marker-editor-element label="3" color="#ff1c39" /></li>-->
+<!--                    <li><scope-marker-editor-element label="4" color="#ff1c39" /></li>-->
+<!--                </ul>-->
+<!--                <h1>Response Analysis Settings</h1>-->
+<!--                <ul>-->
+<!--                    <li><label for="stats-buffer-duration-seconds" title="The duration in seconds that the baseline signal is calculated over.-->
 
-If the baseline EDA signal fluctuates significantly, increase this value.
-">
-                        Baseline calculation period (s)
-                    </label>
-                        <input class="response-analysis-parameter" type="number" id="stats-buffer-duration-seconds" min="1" max="10" step="1" value="5">
-                    </li>
-                    <li><label for="min-latency-seconds" title="The minimum latency in seconds after a stimulus before a response is considered to be an event-related response.
+<!--If the baseline EDA signal fluctuates significantly, increase this value.-->
+<!--">-->
+<!--                        Baseline calculation period (s)-->
+<!--                    </label>-->
+<!--                        <input class="response-analysis-parameter" type="number" id="stats-buffer-duration-seconds" min="1" max="10" step="1" value="5">-->
+<!--                    </li>-->
+<!--                    <li><label for="min-latency-seconds" title="The minimum latency in seconds after a stimulus before a response is considered to be an event-related response.-->
 
-Increase this value to prevent false response detection if the subject has frequent non-specific responses.
-">
-                        Minimum latency period (s)
-                    </label>
-                        <input class="response-analysis-parameter" type="number" id="min-latency-seconds" min="0" max="5" step="1" value="0">
-                    </li>
-                    </li>
-                    <li><label for="max-latency-seconds" title="The maximum latency in seconds  after a stimulus before a response is disregarded.
+<!--Increase this value to prevent false response detection if the subject has frequent non-specific responses.-->
+<!--">-->
+<!--                        Minimum latency period (s)-->
+<!--                    </label>-->
+<!--                        <input class="response-analysis-parameter" type="number" id="min-latency-seconds" min="0" max="5" step="1" value="0">-->
+<!--                    </li>-->
+<!--                    </li>-->
+<!--                    <li><label for="max-latency-seconds" title="The maximum latency in seconds  after a stimulus before a response is disregarded.-->
 
-Decrease this value if valid event-related responses are being missed by the system.
-">
-                        Maximum latency period (s)
-                    </label>
-                        <input class="response-analysis-parameter" type="number" id="max-latency-seconds" min="1" max="10" step="1" value="3">
-                    </li>
-                </ul>
+<!--Decrease this value if valid event-related responses are being missed by the system.-->
+<!--">-->
+<!--                        Maximum latency period (s)-->
+<!--                    </label>-->
+<!--                        <input class="response-analysis-parameter" type="number" id="max-latency-seconds" min="1" max="10" step="1" value="3">-->
+<!--                    </li>-->
+<!--                </ul>-->
             </div>
 
         </div>
+<!--        <div class="page" id="page-2">-->
+<!--            <div class="scopes">-->
+<!--                <scope-element height="300px" width="70vw" class="scl" title="Skin Conductance Level"></scope-element>-->
+<!--                <scope-element id="scr-scope" height="400px"  width="70vw" class="scr" title="Skin Conductance Response" labels></scope-element>-->
+
+
+<!--            </div>-->
+
+<!--        </div>-->
         <div class="page" id="page-2">
-            <div class="scopes">
-                <scope-element height="300px" width="70vw" class="scl" title="Skin Conductance Level"></scope-element>
-                <scope-element id="scr-scope" height="400px"  width="70vw" class="scr" title="Skin Conductance Response" labels></scope-element>
-                <console-element></console-element>
-                <div class="control">
-                    <session-manager-element data-source="scr-scope"></session-manager-element>
+<!--            <face-detect-element enabled="false"></face-detect-element>-->
+            <div class="heart-rate-display face" id="hr-face"></div>
+            <div class="heart-rate-display finger" id="hr-finger"></div>
+            <face-pulse-element enabled="false"></face-pulse-element>
+<!--            <face-pulse-element enabled="false" src="PulseTestJosh.mp4"></face-pulse-element>-->
+            <div class="hcenter">
+                <scope-element  id="finger-ppg-scope" height="15vh"  width="100%" title="Pulse Oximeter"></scope-element>
+                <scope-element  id="face-ppg-scope" height="15vh"  width="100%" title="Camera" labels></scope-element>
 
-                    <scope-marker-editor-element label="Cue" color="#0000ff" />
-
-                    <scope-marker-editor-element label="SCR" color="#ffff00" />
-                </div>
             </div>
 
         </div>
         <div class="page" id="page-3">
-            <facedetect-element enabled="false"></facedetect-element>
-        </div>
-        <div class="page" id="page-4">
-            <scope-element id="eda-scope" height="40vh"  width="95vw" title="MindHeart Tech EDA"></scope-element>
-            <scope-element id="ppg-scope" height="40vh"  width="95vw" title="MindHeart Tech PPG"></scope-element>
+            <console-element></console-element>
+            <div class="control">
+                <session-manager-element data-source="face-ppg-scope"></session-manager-element>
+
+<!--                <scope-marker-editor-element label="Cue" color="#0000ff" />-->
+
+<!--                <scope-marker-editor-element label="SCR" color="#ffff00" />-->
+            </div>
+<!--            <scope-element id="eda-scope" height="40vh"  width="95vw" title="MindHeart Tech EDA"></scope-element>-->
+<!--            <scope-element id="ppg-scope" height="40vh"  width="95vw" title="MindHeart Tech PPG"></scope-element>-->
         </div>
     </div>
 
     <div class="footer">
+        <label for="enable-gaze-detection">Detect Pulse from Camera: </label><input id="enable-gaze-detection" type="checkbox">
+        <label for="enable-speech-detection">Use speech detection: </label><input id="enable-speech-detection" type="checkbox">
+        <div class="speech-detection-active-indicator"></div>
         <div style="clear: both">
-            USB (HID) Device Mindlife EDA:
-            <span id="usb-device-status-indicator">(server status)</span>
-            <websocket-element id="usb-device-connection" style="float: right; margin-right: 5px"  url="ws://localhost:1102" bits="16" channels="1" sample-rate="118.2"></websocket-element>
+            Contec CMS-60
+            <span id="serial-port-device-status-indicator"></span>
+            <websocket-element id="serial-port-device-connection"  style="float: right; margin-right: 5px"  url="ws://localhost:1102" bits="8" channels="1" sample-rate="60"></websocket-element>
+        </div>
 
-        </div>
-        <div style="clear: both">
-            BT Serial Port Device MindHeart Tech:
-            <span id="serial-port-device-status-indicator">(server status)</span>
-            <websocket-element id="serial-port-device-connection"  style="float: right; margin-right: 5px"  url="ws://localhost:1103" bits="16" channels="2" sample-rate="100"></websocket-element>
-        </div>
+        <!--        <div style="clear: both">-->
+<!--            USB (HID) Device Mindlife EDA:-->
+<!--            <span id="usb-device-status-indicator">(not available)</span>-->
+<!--            <websocket-element id="usb-device-connection" style="float: right; margin-right: 5px"  url="ws://localhost:1102" bits="16" channels="1" sample-rate="118.2"></websocket-element>-->
+<!--            <websocket-element id="usb-device-connection" style="float: right; margin-right: 5px" bits="16" channels="1" sample-rate="118.2"></websocket-element>-->
+
+<!--        </div>-->
+<!--        <div style="clear: both">-->
+<!--            BT Serial Port Device MindHeart Tech:-->
+<!--            <span id="serial-port-device-status-indicator">(not available)</span>-->
+<!--            <websocket-element id="serial-port-device-connection"  style="float: right; margin-right: 5px"  url="ws://localhost:1103" bits="16" channels="2" sample-rate="100"></websocket-element>-->
+<!--            <websocket-element id="serial-port-device-connection"  style="float: right; margin-right: 5px" bits="16" channels="2" sample-rate="100"></websocket-element>-->
+<!--        </div>-->
     </div>
 
-    <script src="opencv/opencv.js"></script>
+<!--    <script src="opencv/opencv.js"></script>-->
     <script src="index.js"></script>
 </div>
 </body>
